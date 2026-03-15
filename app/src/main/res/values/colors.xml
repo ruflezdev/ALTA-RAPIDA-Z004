@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Paleta Estilo Stripe (Contraste Mejorado) -->
+    <color name="primary">#FCFCFF</color> <!-- Azul Stripe -->
+    <color name="primary_variant">#FFFF00</color> <!-- Navy más oscuro para botones -->
+    <color name="accent">#00D4FF</color>
+
+    <color name="background_light">#F6F9FC</color>
+    <color name="surface_light">#FFFFFF</color>
+
+    <color name="text_primary">#000000</color> <!-- Negro puro para máxima visibilidad -->
+    <color name="text_secondary">#272A35</color> <!-- Gris muy oscuro para etiquetas/hints -->
+
+    <color name="success">#00875A</color>
+    <color name="error">#DF1B41</color>
+
+    <color name="border_color">#A3ACBA</color> <!-- Borde más definido para los campos -->
+</resources>

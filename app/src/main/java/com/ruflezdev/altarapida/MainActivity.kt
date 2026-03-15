@@ -320,7 +320,7 @@ class MainActivity : AppCompatActivity() {
         val txtIp = dialogView.findViewById<EditText>(R.id.txtIp)
         val imgDev = dialogView.findViewById<ImageView>(R.id.imgDeveloper)
         val tvEmail = dialogView.findViewById<TextView>(R.id.tvDevEmail)
-        
+
         txtIp.setText(currentIp)
         tvEmail.text = "ruben.dev@example.com" // Cambia por tu correo real
 

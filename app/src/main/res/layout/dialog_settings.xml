@@ -7,26 +7,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center_horizontal">
+        android:padding="24dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Configuración de Servidor"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="Ingresa la dirección IP del servidor (sin http:// ni puerto)"
             android:textColor="@color/text_secondary"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp" />
+            android:textSize="14sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutIp"
@@ -49,8 +49,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/border_color"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:background="@color/border_color" />
 
         <!-- Developer Info Section -->
         <com.google.android.material.imageview.ShapeableImageView
@@ -59,8 +59,8 @@
             android:layout_height="80dp"
             android:layout_marginBottom="12dp"
             android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/CircleImage"
-            android:src="@android:drawable/ic_menu_gallery" />
+            android:src="@android:drawable/ic_menu_gallery"
+            app:shapeAppearanceOverlay="@style/CircleImage" />
 
         <TextView
             android:id="@+id/tvDevName"
@@ -75,18 +75,18 @@
             android:id="@+id/tvDevEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="tu-correo@ejemplo.com"
             android:textColor="@color/primary"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Contacto GitHub"
             android:textColor="@color/text_secondary"
-            android:textSize="12sp"
-            android:layout_marginTop="8dp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 </ScrollView>

@@ -73,13 +73,29 @@
         app:layout_constraintTop_toTopOf="@+id/layoutBusqueda"
         app:tint="?attr/colorPrimary" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutFiltroLinea"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Filtrar por Línea"
+        app:layout_constraintTop_toBottomOf="@id/layoutBusqueda">
+
+        <AutoCompleteTextView
+            android:id="@+id/spinnerLineaConsulta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvResultados"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutBusqueda"
+        app:layout_constraintTop_toBottomOf="@id/layoutFiltroLinea"
         tools:listitem="@layout/item_producto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,14 +8,18 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    // Cambiamos a List<Producto> para soportar múltiples coincidencias (búsqueda por nombre)
     @GET("productos/buscar")
     fun buscarProductos(@Query("q") query: String): Call<List<Producto>>
 
-    // Mantenemos la búsqueda por ID exacto si es necesaria, pero la búsqueda general es más flexible
     @GET("producto/{id}")
     fun buscarProducto(@Path("id") id: String): Call<Producto>
 
     @POST("producto/actualizar")
     fun actualizarProducto(@Body producto: Producto): Call<String>
+
+    @GET("lineas")
+    fun getLineas(): Call<List<Linea>>
+
+    @GET("productos/linea/{linea}")
+    fun getProductosPorLinea(@Path("linea") linea: String): Call<List<Producto>>
 }

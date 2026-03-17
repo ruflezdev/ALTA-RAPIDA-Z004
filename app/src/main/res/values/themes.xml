@@ -18,7 +18,8 @@
         <item name="android:windowLightStatusBar">true</item>
 
         <!-- Configuración global de componentes -->
-        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox
+        </item>
 
         <item name="colorError">@color/error</item>
         <item name="colorSurface">@color/white</item>

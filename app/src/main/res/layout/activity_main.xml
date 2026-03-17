@@ -12,7 +12,7 @@
         android:layout_marginTop="12dp"
         android:text="ALTA RAPIDA"
         android:textColor="?attr/colorPrimary"
-        android:textSize="16sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,8 +52,8 @@
 
         <ImageButton
             android:id="@+id/btnIrAConsultar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Consultar Inventario"
             android:src="@drawable/iconinventory"
@@ -61,8 +61,8 @@
 
         <ImageButton
             android:id="@+id/btnSettings"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Configuración"
             android:src="@drawable/iconengrane"
@@ -170,12 +170,13 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutLinea"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:hint="Línea (Grupo)">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/txtLinea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

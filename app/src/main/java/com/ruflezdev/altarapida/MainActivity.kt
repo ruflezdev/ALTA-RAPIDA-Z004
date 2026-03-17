@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txtNombre: EditText
     private lateinit var txtPrecio: EditText
     private lateinit var txtExistencia: EditText
-    private lateinit var txtLinea: EditText
+    private lateinit var txtLinea: AutoCompleteTextView
     private lateinit var txtUnidad: AutoCompleteTextView
     private lateinit var layoutExistencia: TextInputLayout
     private lateinit var cbInventarioReal: CheckBox
@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
 
     private var apiService: ApiService? = null
     private var stockActualBaseDeDatos: Double = 0.0
+    private var listaLineas: MutableList<Linea> = mutableListOf()
+    private val ADD_NEW_LINE_TEXT = "+ Crear nueva línea..."
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         setupRetrofit()
         verificarConexion()
         setupUnidadDropdown()
+        cargarLineas()
 
         txtCodigo.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_NEXT) {
@@ -122,6 +125,16 @@ class MainActivity : AppCompatActivity() {
         btnIrAConsultar.setOnClickListener {
             startActivity(Intent(this, ConsultaActivity::class.java))
         }
+
+        txtLinea.setOnItemClickListener { parent, _, position, _ ->
+            val seleccionado = parent.getItemAtPosition(position)
+            if (seleccionado is String && seleccionado == ADD_NEW_LINE_TEXT) {
+                txtLinea.setText("")
+                mostrarDialogoNuevaLinea()
+            } else if (seleccionado is Linea) {
+                txtLinea.setText(seleccionado.Descrip, false)
+            }
+        }
     }
 
     private fun setupUnidadDropdown() {
@@ -129,6 +142,55 @@ class MainActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, unidades)
         txtUnidad.setAdapter(adapter)
         txtUnidad.setText("PZA", false)
+    }
+
+    private fun cargarLineas() {
+        apiService?.getLineas()?.enqueue(object : Callback<List<Linea>> {
+            override fun onResponse(call: Call<List<Linea>>, response: Response<List<Linea>>) {
+                if (response.isSuccessful) {
+                    val rawList = response.body() ?: emptyList()
+                    listaLineas = rawList.sortedBy { it.Descrip.lowercase() }.toMutableList()
+                    actualizarAdapterLinea()
+                }
+            }
+            override fun onFailure(call: Call<List<Linea>>, t: Throwable) { }
+        })
+    }
+
+    private fun mostrarDialogoNuevaLinea() {
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_nueva_linea, null)
+        val inputCodigo = view.findViewById<EditText>(R.id.txtNuevoCodigoLinea)
+        val inputDescrip = view.findViewById<EditText>(R.id.txtNuevaDescripLinea)
+
+        AlertDialog.Builder(this)
+            .setTitle("Agregar Nueva Línea")
+            .setView(view)
+            .setPositiveButton("Guardar") { _, _ ->
+                val cod = inputCodigo.text.toString().trim().uppercase()
+                val desc = inputDescrip.text.toString().trim()
+                if (cod.isNotEmpty() && desc.isNotEmpty()) {
+                    val nueva = Linea(cod, desc)
+                    if (!listaLineas.any { it.Linea == cod }) {
+                        listaLineas.add(nueva)
+                        listaLineas.sortBy { it.Descrip.lowercase() }
+                        actualizarAdapterLinea()
+                    }
+                    txtLinea.setText(desc, false)
+                } else {
+                    Toast.makeText(this, "El código y la descripción son obligatorios", Toast.LENGTH_SHORT).show()
+                    txtLinea.setText("SYS", false)
+                }
+            }
+            .setNegativeButton("Cancelar") { _, _ ->
+                txtLinea.setText("SYS", false)
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun actualizarAdapterLinea() {
+        val adapter = LineaAdapter(this@MainActivity, R.layout.item_linea_dropdown, listaLineas, true)
+        txtLinea.setAdapter(adapter)
     }
 
     private fun setupRetrofit() {
@@ -149,27 +211,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun verificarConexion() {
-        updateStatus(1) // Conectando (Amarillo)
-        apiService?.buscarProductos("test_ping_connection")
-            ?.enqueue(object : Callback<List<Producto>> {
-                override fun onResponse(
-                    call: Call<List<Producto>>,
-                    response: Response<List<Producto>>
-                ) {
-                    updateStatus(0) // Conectado (Verde)
+        updateStatus(1)
+        apiService?.getLineas()?.enqueue(object : Callback<List<Linea>> {
+                override fun onResponse(call: Call<List<Linea>>, response: Response<List<Linea>>) {
+                    updateStatus(0)
+                    if (listaLineas.isEmpty()) cargarLineas()
                 }
-
-                override fun onFailure(call: Call<List<Producto>>, t: Throwable) {
-                    updateStatus(2) // Desconectado (Rojo)
+                override fun onFailure(call: Call<List<Linea>>, t: Throwable) {
+                    updateStatus(2)
                 }
             })
     }
 
     private fun updateStatus(status: Int) {
         val color = when (status) {
-            0 -> R.color.success // Verde
-            1 -> R.color.warning // Amarillo
-            else -> R.color.error // Rojo
+            0 -> R.color.success
+            1 -> R.color.warning
+            else -> R.color.error
         }
         val text = when (status) {
             0 -> "Conectado"
@@ -260,11 +318,18 @@ class MainActivity : AppCompatActivity() {
         txtCodigo.setText(p.CodigoBarras)
         txtNombre.setText(p.Producto)
         txtPrecio.setText(p.PrecioPublico.toString())
-        txtLinea.setText(p.Linea ?: "SYS")
+        
+        val lineaEncontrada = listaLineas.find { it.Linea == p.Linea }
+        if (lineaEncontrada != null) {
+            txtLinea.setText(lineaEncontrada.Descrip, false)
+        } else {
+            txtLinea.setText(p.Linea ?: "SYS", false)
+        }
+        
         txtUnidad.setText(p.Unidad ?: "PZA", false)
         cbGranel.isChecked = p.Granel == 1
         cbSpeso.isChecked = p.Speso == 1
-        
+
         stockActualBaseDeDatos = p.Existencias
         txtExistencia.setText("")
         layoutExistencia.helperText = "Stock en sistema: $stockActualBaseDeDatos"
@@ -294,12 +359,19 @@ class MainActivity : AppCompatActivity() {
             stockActualBaseDeDatos + cantidadIngresada
         }
 
+        val textoLineaInput = txtLinea.text.toString().trim()
+        val lineaObj = listaLineas.find { it.Descrip.equals(textoLineaInput, ignoreCase = true) }
+        
+        val codigoLineaFinal = lineaObj?.Linea ?: textoLineaInput.ifBlank { "SYS" }
+        val descripLineaFinal = if (lineaObj == null) textoLineaInput.ifBlank { "SYS" } else null
+
         val p = Producto(
             CodigoBarras = txtCodigo.text.toString(),
             Producto = txtNombre.text.toString(),
             PrecioPublico = txtPrecio.text.toString().toDoubleOrNull() ?: 0.0,
             Existencias = stockFinal,
-            Linea = txtLinea.text.toString().ifBlank { "SYS" },
+            Linea = codigoLineaFinal,
+            DescripLinea = descripLineaFinal,
             Unidad = txtUnidad.text.toString().ifBlank { "PZA" },
             Granel = if (cbGranel.isChecked) 1 else 0,
             Speso = if (cbSpeso.isChecked) 1 else 0
@@ -316,6 +388,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
                     limpiarCampos()
+                    cargarLineas()
                 } else {
                     Toast.makeText(this@MainActivity, "Error al guardar", Toast.LENGTH_SHORT).show()
                 }
@@ -333,7 +406,7 @@ class MainActivity : AppCompatActivity() {
         txtNombre.text.clear()
         txtPrecio.text.clear()
         txtExistencia.text.clear()
-        txtLinea.setText("SYS")
+        txtLinea.setText("SYS", false)
         txtUnidad.setText("PZA", false)
         cbGranel.isChecked = false
         cbSpeso.isChecked = false

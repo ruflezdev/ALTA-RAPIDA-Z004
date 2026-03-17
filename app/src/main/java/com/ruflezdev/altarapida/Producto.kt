@@ -6,6 +6,7 @@ data class Producto(
     val PrecioPublico: Double,
     val Existencias: Double,
     val Linea: String? = "SYS",
+    val DescripLinea: String? = null,
     val Unidad: String? = "PZA",
     val Granel: Int? = 0,
     val Speso: Int? = 0

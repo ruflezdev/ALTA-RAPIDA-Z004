@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CONSULTA DE INVENTARIO"
+        android:textColor="?attr/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,12 +38,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Desconectado"
+            android:textColor="@color/text_secondary"
             android:textSize="12sp" />
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutBusqueda"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -70,7 +71,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/layoutBusqueda"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/layoutBusqueda"
-        app:tint="@color/primary" />
+        app:tint="?attr/colorPrimary" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvResultados"

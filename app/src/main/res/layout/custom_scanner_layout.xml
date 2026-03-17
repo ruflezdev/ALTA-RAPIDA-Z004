@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         app:zxing_framing_rect_height="120dp"
         app:zxing_framing_rect_width="320dp"
-        app:zxing_viewfinder_laser="@color/accent"
+        app:zxing_viewfinder_laser="@color/colorAccent"
         app:zxing_viewfinder_mask="#AA000000" />
 
     <ImageButton

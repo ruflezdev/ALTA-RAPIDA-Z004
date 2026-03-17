@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Colores Base -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#1A1A1A</color>
+    <color name="gray_light">#F5F7FA</color>
+    <color name="gray_medium">#A3ACBA</color>
 
-    <!-- Paleta Estilo Stripe (Contraste Mejorado) -->
-    <color name="primary">#FCFCFF</color> <!-- Azul Stripe -->
-    <color name="primary_variant">#FFFF00</color> <!-- Navy más oscuro para botones -->
-    <color name="accent">#00D4FF</color>
+    <!-- Marca y Acentos -->
+    <color name="colorPrimary">#171278</color>
+    <color name="colorAccent">#03DAC5</color>
 
-    <color name="background_light">#F6F9FC</color>
-    <color name="surface_light">#FFFFFF</color>
+    <!-- Estados -->
+    <color name="success">#4CAF50</color>
+    <color name="error">#F44336</color>
+    <color name="warning">#FFC107</color>
 
-    <color name="text_primary">#000000</color> <!-- Negro puro para máxima visibilidad -->
-    <color name="text_secondary">#272A35</color> <!-- Gris muy oscuro para etiquetas/hints -->
-
-    <color name="success">#00875A</color>
-    <color name="error">#DF1B41</color>
-
-    <color name="border_color">#A3ACBA</color> <!-- Borde más definido para los campos -->
+    <!-- Texto -->
+    <color name="text_primary">#1A1A1A</color>
+    <color name="text_secondary">#757575</color>
 </resources>

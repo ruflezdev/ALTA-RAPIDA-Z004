@@ -24,33 +24,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Ingresa la dirección IP del servidor (sin http:// ni puerto)"
+            android:text="Ingresa la dirección IP del servidor"
             android:textColor="@color/text_secondary"
             android:textSize="14sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutIp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:boxStrokeColor="@color/primary"
-            app:hintTextColor="@color/text_secondary">
+            android:layout_marginBottom="24dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtIp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Dirección IP"
-                android:inputType="text"
-                android:textColor="@color/text_primary" />
+                android:hint="Dirección IP (ej. 192.168.1.10)"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="24dp"
-            android:background="@color/border_color" />
+            android:background="@color/gray_light" />
 
         <!-- Developer Info Section -->
         <com.google.android.material.imageview.ShapeableImageView
@@ -66,7 +62,7 @@
             android:id="@+id/tvDevName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rubén (Developer)"
+            android:text="Rubén Lomeli"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -76,15 +72,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="tu-correo@ejemplo.com"
-            android:textColor="@color/primary"
+            android:text="rubenlomeli0728@gmail.com"
+            android:textColor="?attr/colorPrimary"
             android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Contacto GitHub"
+            android:text="Contacto GitHub: ruflezdev"
             android:textColor="@color/text_secondary"
             android:textSize="12sp" />
 

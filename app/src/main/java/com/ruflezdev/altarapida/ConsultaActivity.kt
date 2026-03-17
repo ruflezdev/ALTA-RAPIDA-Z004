@@ -115,7 +115,7 @@ class ConsultaActivity : AppCompatActivity() {
     private fun updateStatus(status: Int) {
         val color = when (status) {
             0 -> R.color.success // Verde
-            1 -> R.color.accent  // Amarillo
+            1 -> R.color.warning // Amarillo
             else -> R.color.error // Rojo
         }
         val text = when (status) {
@@ -135,6 +135,25 @@ class ConsultaActivity : AppCompatActivity() {
         if (query.isBlank()) return
         updateStatus(1)
 
+        // Prioridad 1: Búsqueda exacta primero
+        apiService?.buscarProducto(query)?.enqueue(object : Callback<Producto> {
+            override fun onResponse(call: Call<Producto>, response: Response<Producto>) {
+                if (response.isSuccessful && response.body() != null) {
+                    updateStatus(0)
+                    rvResultados.adapter = ProductAdapter(listOf(response.body()!!))
+                } else {
+                    // Si no es exacto, intentamos búsqueda general
+                    intentarBusquedaGeneral(query)
+                }
+            }
+
+            override fun onFailure(call: Call<Producto>, t: Throwable) {
+                intentarBusquedaGeneral(query)
+            }
+        })
+    }
+
+    private fun intentarBusquedaGeneral(query: String) {
         apiService?.buscarProductos(query)?.enqueue(object : Callback<List<Producto>> {
             override fun onResponse(
                 call: Call<List<Producto>>,
@@ -143,41 +162,25 @@ class ConsultaActivity : AppCompatActivity() {
                 updateStatus(0)
                 if (response.isSuccessful) {
                     val productos = response.body() ?: emptyList()
-                    if (productos.isNotEmpty()) {
-                        rvResultados.adapter = ProductAdapter(productos)
-                    } else {
-                        intentarBusquedaExacta(query)
+                    rvResultados.adapter = ProductAdapter(productos)
+                    if (productos.isEmpty()) {
+                        Toast.makeText(
+                            this@ConsultaActivity,
+                            "Producto no encontrado",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
-                } else {
-                    intentarBusquedaExacta(query)
-                }
-            }
-
-            override fun onFailure(call: Call<List<Producto>>, t: Throwable) {
-                updateStatus(2)
-                intentarBusquedaExacta(query)
-            }
-        })
-    }
-
-    private fun intentarBusquedaExacta(id: String) {
-        apiService?.buscarProducto(id)?.enqueue(object : Callback<Producto> {
-            override fun onResponse(call: Call<Producto>, response: Response<Producto>) {
-                updateStatus(0)
-                if (response.isSuccessful && response.body() != null) {
-                    val producto = response.body()!!
-                    rvResultados.adapter = ProductAdapter(listOf(producto))
                 } else {
                     rvResultados.adapter = ProductAdapter(emptyList())
                     Toast.makeText(
                         this@ConsultaActivity,
-                        "Producto no encontrado",
+                        "Error en la búsqueda",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }
 
-            override fun onFailure(call: Call<Producto>, t: Throwable) {
+            override fun onFailure(call: Call<List<Producto>>, t: Throwable) {
                 updateStatus(2)
                 Toast.makeText(this@ConsultaActivity, "Error de conexión", Toast.LENGTH_SHORT)
                     .show()

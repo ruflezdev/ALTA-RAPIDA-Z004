@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Ingresa la dirección IP del servidor"
+            android:text="Ingresa la dirección IP del servidor generada por la API MyBusinessBridge https://github.com/ruflezdev/MyBusinessBridge "
             android:textColor="@color/text_secondary"
             android:textSize="14sp" />
 

@@ -51,12 +51,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            android:id="@+id/btnIrAPedido"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Generar Pedido"
+            android:src="@drawable/iconinventory"
+            app:tint="?attr/colorPrimary" />
+
+        <ImageButton
             android:id="@+id/btnIrAConsultar"
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Consultar Inventario"
-            android:src="@drawable/iconinventory"
+            android:contentDescription="Auditoría Inventario"
+            android:src="@drawable/iconinventorysettings"
             app:tint="?attr/colorPrimary" />
 
         <ImageButton
@@ -103,6 +112,7 @@
                         android:id="@+id/txtCodigo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:imeOptions="actionSearch"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,31 +147,13 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/layoutPrecio"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
                     android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
                     android:hint="Precio ($)">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtPrecio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutExistencia"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
-                    android:hint="Cantidad / Stock">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtExistencia"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal" />
@@ -203,12 +195,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:orientation="vertical">
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/cbInventarioReal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Inventario Real (Sobrescribir stock)" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/cbGranel"

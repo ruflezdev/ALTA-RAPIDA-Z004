@@ -8,116 +8,73 @@
 
     <!-- CABECERA -->
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvTitlePedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AUDITORÍA DE INVENTARIO"
+        android:text="GENERAR PRE-PEDIDO"
         android:textColor="?attr/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- SELECCIÓN DE LÍNEA (ESTADO INICIAL) -->
     <LinearLayout
-        android:id="@+id/statusContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <View
-            android:id="@+id/viewStatusDot"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginEnd="6dp"
-            android:background="@android:drawable/presence_invisible" />
-
-        <TextView
-            android:id="@+id/tvStatusText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Desconectado"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-    <!-- ESTADO 1: SELECCIÓN O BÚSQUEDA INDIVIDUAL -->
-    <LinearLayout
-        android:id="@+id/layoutSeleccionInicial"
+        android:id="@+id/layoutSeleccionLineaPedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:orientation="vertical"
         android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+        app:layout_constraintTop_toBottomOf="@id/tvTitlePedido">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="Elige una opción para auditar:"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:text="¿Hacer pedido de una línea específica?"
+            android:textSize="16sp" />
 
-        <!-- BUSCADOR INDIVIDUAL (URGENTE) -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutBusquedaIndividual"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="Buscar producto individual (Urgente)"
-            app:endIconDrawable="@android:drawable/ic_menu_search"
-            app:endIconMode="custom">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txtBusquedaIndividual"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionSearch"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="16dp"
-            android:background="#DDDDDD" />
-
-        <!-- SELECCIÓN POR LÍNEA -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Trabajar por Línea (Pre-Inventario)">
+            android:hint="Seleccionar Línea (Opcional)">
 
             <AutoCompleteTextView
-                android:id="@+id/spinnerLineaInicial"
+                android:id="@+id/spinnerLineaPedido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPedidoLibre"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="O CONTINUAR CON PEDIDO LIBRE" />
     </LinearLayout>
 
-    <!-- ESTADO 2: TRABAJO EN LÍNEA -->
+    <!-- TRABAJO DE PEDIDO -->
     <LinearLayout
-        android:id="@+id/layoutTrabajoLinea"
+        android:id="@+id/layoutTrabajoPedido"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btnFinalizarReporte"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+        app:layout_constraintBottom_toTopOf="@+id/btnFinalizarPedido"
+        app:layout_constraintTop_toBottomOf="@id/tvTitlePedido">
 
         <TextView
-            android:id="@+id/tvLineaActiva"
+            android:id="@+id/tvLineaActivaPedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/colorSecondary"
             android:padding="8dp"
-            android:text="Línea Activa"
+            android:text="Pedido: Libre"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -129,15 +86,15 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutBusqueda"
+                android:id="@+id/layoutBusquedaPedido"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Escanear o buscar en línea..."
+                android:hint="Escanear o buscar nombre..."
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtBusqueda"
+                    android:id="@+id/txtBusquedaPedido"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionSearch"
@@ -145,7 +102,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageButton
-                android:id="@+id/btnScanConsulta"
+                android:id="@+id/btnScanPedido"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="8dp"
@@ -155,7 +112,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvResultados"
+            android:id="@+id/rvPedido"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
@@ -165,11 +122,11 @@
 
     <!-- BOTÓN FINALIZAR -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnFinalizarReporte"
+        android:id="@+id/btnFinalizarPedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="FINALIZAR AUDITORÍA"
+        android:text="ENVIAR / EXPORTAR PEDIDO"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent" />
 
